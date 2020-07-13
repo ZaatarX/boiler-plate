@@ -9,7 +9,9 @@
   },
   "scripts": {
     "start": "node /server/server.js",
-    "dev": "nodemon server/server.js"
+    "backend": "nodemon server/server.js",
+    "frontend": "npm run start --prefix client",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "author": "Ricardo Fadlallah",
   "license": "ISC",
@@ -21,6 +23,7 @@
     "mongoose": "^5.9.23"
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.4"
   }
 }
