@@ -1,4 +1,5 @@
-module.exports = {
-  mongoURI:
-    "mongodb+srv://ricardo:ricardo123@sandbox-ry9vj.mongodb.net/mern?retryWrites=true&w=majority",
-};
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./prod");
+} else {
+  module.exports = require("./dev");
+}
