@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
-const { User } = require("./models/user");
 const config = require("./config/keys");
 
 const app = express();
@@ -21,24 +20,15 @@ mongoose
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(() => console.log(`Mongo doing the mambo-jambo.`))
   .catch((err) => console.log(err));
 
-// Requests
-app.get("/", (req, res) => {
-  res.json({ "hello ~": "hi ~~" });
-});
+// Use Routes
+app.use("/api/users", require("./routes/api/users"));
 
-app.post("/api/users/register", (req, res) => {
-  const user = new User(req.body);
-  user.save((err, userData) => {
-    if (err) return res.status(400).json({ success: false });
-
-    return res.status(200).json({ success: true });
-  });
-});
-
+// Set port server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server ever shining on port ${PORT}!`));
