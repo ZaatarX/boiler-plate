@@ -29,10 +29,10 @@ router.get("/auth", auth, (req, res) => {
 // @access Private
 router.post("/register", (req, res) => {
   const user = new User(req.body);
-  user.save((err, userData) => {
-    if (err) return res.status(400).json({ success: false });
+  user.save((err, doc) => {
+    if (err) return res.status(400).json({ success: false, err });
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, userData: doc });
   });
 });
 
@@ -45,7 +45,7 @@ router.post("/login", (req, res) => {
     if (!user)
       return res.json({
         loginSuccess: false,
-        message: "Authorization failed: email not found",
+        message: "Authorization failed: email not found.",
       });
 
     // Check password
